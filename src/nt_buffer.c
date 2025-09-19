@@ -12,16 +12,12 @@ struct nt_buffer
 
 nt_buffer *nt_buffer_new(size_t capacity, size_t element_size, void (*destructor)(void *))
 {
-    nt_buffer *res;
-
-    res = malloc(sizeof(nt_buffer));
+    nt_buffer *res = malloc(sizeof(nt_buffer));
 
     if (!res)
-    {
         return (NULL);
-    }
 
-    if (nt_buffer_init(res, capacity, element_size, destructor))
+    if (nt_buffer_init(res, capacity, element_size, destructor) != NT_BUFFER_SUCCESS)
     {
         free(res);
         return (NULL);
@@ -29,22 +25,25 @@ nt_buffer *nt_buffer_new(size_t capacity, size_t element_size, void (*destructor
 
     return (res);
 }
-
-static int nt_buffer_init(nt_buffer *buf, size_t capacity, size_t element_size, void (*destructor)(void *))
+static nt_buffer_return_code
+nt_buffer_init(nt_buffer *buf, size_t capacity, size_t element_size, void (*destructor)(void *))
 {
     if (!buf || element_size == 0)
-        return (1);
+        return (NT_BUFFER_FAILURE_INVALID_ARGUMENT);
 
     buf->data = NULL;
+
     if (capacity > 0)
     {
-        buf->data = malloc(element_size * capacity);
+        buf->data = malloc(capacity * element_size);
         if (!buf->data)
-            return (1);
+            return (NT_BUFFER_FAILURE_MALLOC);
     }
+
     buf->capacity = capacity;
     buf->element_count = 0;
     buf->element_size = element_size;
     buf->destructor = destructor;
-    return (0);
+
+    return (NT_BUFFER_SUCCESS);
 }
