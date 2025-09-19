@@ -1,5 +1,6 @@
 #include "nt_buffer.h"
 #include <stddef.h>
+#include <string.h>
 
 struct nt_buffer
 {
@@ -132,4 +133,34 @@ void nt_buffer_clear(nt_buffer *buf)
         }
     }
     buf->element_count = 0;
+}
+
+/**
+ * Add an element to a nt_buffer struct
+ * @param buf The buffer's pointer
+ * @param elt The element to add
+ * @return 1 if failed, 0 if success
+ */
+nt_buffer_return_code nt_buffer_add(nt_buffer *buf, const void *elt)
+{
+    size_t new_cap;
+    void  *new_data;
+
+    if (!buf || !elt)
+        return (NT_BUFFER_FAILURE_INVALID_ARGUMENT);
+
+    if (buf->element_count == buf->capacity)
+    {
+        new_cap = buf->capacity ? buf->capacity * 2 : 4;
+        new_data = realloc(buf->data, new_cap * buf->element_size);
+        if (!new_data)
+            return (NT_BUFFER_FAILURE_MALLOC);
+        buf->data = new_data;
+        buf->capacity = new_cap;
+    }
+
+    memcpy((char *)buf->data + (buf->element_count * buf->element_size), elt, buf->element_size);
+    buf->element_count++;
+
+    return (NT_BUFFER_SUCCESS);
 }
