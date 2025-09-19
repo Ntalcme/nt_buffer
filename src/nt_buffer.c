@@ -46,7 +46,7 @@ nt_buffer *nt_buffer_new(size_t capacity, size_t element_size, void (*destructor
  * char type)
  * @param destructor An appropriate destructor function pointer (NULL if not
  * needed))
- * @return the apprioate success/failure code
+ * @return the appropriate success/failure code
  */
 static nt_buffer_return_code
 nt_buffer_init(nt_buffer *buf, size_t capacity, size_t element_size, void (*destructor)(void *))
@@ -139,7 +139,7 @@ void nt_buffer_clear(nt_buffer *buf)
  * Add an element to a nt_buffer struct
  * @param buf The buffer's pointer
  * @param elt The element to add
- * @return 1 if failed, 0 if success
+ * @return the appropriate success/failure code
  */
 nt_buffer_return_code nt_buffer_add(nt_buffer *buf, const void *elt)
 {
@@ -189,4 +189,34 @@ void nt_buffer_remove(nt_buffer *buf, size_t i)
            bytes_to_move);
 
     buf->element_count--;
+}
+
+/**
+ * Reallocs only the necessary memory for the buffer's data
+ * @param buf The buffer's pointer
+ * @return the appropriate success/failure code
+ */
+nt_buffer_return_code nt_buffer_shrink_to_fit(nt_buffer *buf)
+{
+    void *new_data;
+
+    if (!buf || !buf->data || buf->element_count == buf->capacity)
+        return (NT_BUFFER_SUCCESS);
+
+    if (buf->element_count == 0)
+    {
+        free(buf->data);
+        buf->data = NULL;
+        buf->capacity = 0;
+        return (NT_BUFFER_SUCCESS);
+    }
+
+    new_data = realloc(buf->data, buf->element_count * buf->element_size);
+
+    if (!new_data)
+        return (NT_BUFFER_FAILURE_MALLOC);
+    buf->data = new_data;
+    buf->capacity = buf->element_count;
+
+    return (NT_BUFFER_SUCCESS);
 }
