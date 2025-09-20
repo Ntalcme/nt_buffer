@@ -40,14 +40,14 @@ nt_buffer *nt_buffer_new(size_t capacity, size_t element_size, void (*destructor
 /**
  * Init a buffer with a start capacity of data,
  * the bytes' size of elements that will be stocked in it
- * and a pointer of a destructor function (NULL if not needed)
- * @param buf The buffer's pointer
- * @param capacity The initial capacity
+ * and a pointer of a destructor function (NULL if not needed).
+ * @param buf The buffer's pointer.
+ * @param capacity The initial capacity.
  * @param element_size The bytes' size of the future stocked elements (ex: 1 for
- * char type)
+ * char type).
  * @param destructor An appropriate destructor function pointer (NULL if not
- * needed))
- * @return the appropriate success/failure code
+ * needed).
+ * @return the appropriate success/failure code.
  */
 static nt_buffer_return_code
 nt_buffer_init(nt_buffer *buf, size_t capacity, size_t element_size, void (*destructor)(void *))
@@ -73,9 +73,9 @@ nt_buffer_init(nt_buffer *buf, size_t capacity, size_t element_size, void (*dest
 }
 
 /**
- * Frees all dynamically allocated memory within the buffer and resets its state
- * to empty The buffer itself is not freed by this function
- * @param buf The buffer's pointer
+ * Frees all dynamically allocated memory within the buffer and resets its state.
+ * to empty The buffer itself is not freed by this function.
+ * @param buf The buffer's pointer.
  */
 static void nt_buffer_free(nt_buffer *buf)
 {
@@ -102,8 +102,8 @@ static void nt_buffer_free(nt_buffer *buf)
 }
 
 /**
- * Frees all datas of the buffer and free the buffer itself
- * @param buf_ptr The pointer of the buffer's pointer
+ * Frees all datas of the buffer and free the buffer itself.
+ * @param buf_ptr The pointer of the buffer's pointer.
  */
 void nt_buffer_delete(nt_buffer **buf_ptr)
 {
@@ -118,8 +118,8 @@ void nt_buffer_delete(nt_buffer **buf_ptr)
 }
 
 /**
- * Clear all elements of the buffer but keeps the allocated memory
- * @param buf The buffer's pointer
+ * Clear all elements of the buffer but keeps the allocated memory.
+ * @param buf The buffer's pointer.
  */
 void nt_buffer_clear(nt_buffer *buf)
 {
@@ -137,10 +137,10 @@ void nt_buffer_clear(nt_buffer *buf)
 }
 
 /**
- * Add an element to a nt_buffer struct
- * @param buf The buffer's pointer
- * @param elt The element to add
- * @return the appropriate success/failure code
+ * Add an element to a nt_buffer struct.
+ * @param buf The buffer's pointer.
+ * @param elt The element to add.
+ * @return the appropriate success/failure code.
  */
 nt_buffer_return_code nt_buffer_add(nt_buffer *buf, const void *elt)
 {
@@ -167,10 +167,10 @@ nt_buffer_return_code nt_buffer_add(nt_buffer *buf, const void *elt)
 }
 
 /**
- * Remove an element of the nt_buffer at an index
- * Elements after the removed one are shifted to fill the gap
- * @param buf The buffer's pointer
- * @param i The index
+ * Remove an element of the nt_buffer at an index.
+ * Elements after the removed one are shifted to fill the gap.
+ * @param buf The buffer's pointer.
+ * @param i The index.
  */
 void nt_buffer_remove(nt_buffer *buf, size_t i)
 {
