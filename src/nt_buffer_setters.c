@@ -1,5 +1,6 @@
 #include "nt_buffer_internal.h"
 #include <stddef.h>
+#include <stdlib.h>
 
 /**
  * Ensures the buffer has at least new_capacity.

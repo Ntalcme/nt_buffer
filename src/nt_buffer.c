@@ -2,40 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct nt_buffer
-{
-    void  *data;
-    size_t element_count;
-    size_t capacity;
-    size_t element_size;
-    void (*destructor)(void *);
-};
-
-/**
- * Allocate and init a nt_buffer struct with specified params.
- * @param capacity The initial capacity.
- * @param element_size The bytes' size of the future stocked elements (ex: 1 for
- * char type).
- * @param destructor An appropriate destructor function pointer (NULL if not
- * needed).
- * @return The new nt_buffer's pointer (NULL if any error).
- */
-nt_buffer *nt_buffer_new(size_t capacity, size_t element_size, void (*destructor)(void *))
-{
-    nt_buffer *res = malloc(sizeof(nt_buffer));
-
-    if (!res)
-        return (NULL);
-
-    if (nt_buffer_init(res, capacity, element_size, destructor) != NT_BUFFER_SUCCESS)
-    {
-        free(res);
-        return (NULL);
-    }
-
-    return (res);
-}
-
 /**
  * Init a buffer with a start capacity of data,
  * the bytes' size of elements that will be stocked in it
@@ -69,6 +35,31 @@ nt_buffer_init(nt_buffer *buf, size_t capacity, size_t element_size, void (*dest
     buf->destructor = destructor;
 
     return (NT_BUFFER_SUCCESS);
+}
+
+/**
+ * Allocate and init a nt_buffer struct with specified params.
+ * @param capacity The initial capacity.
+ * @param element_size The bytes' size of the future stocked elements (ex: 1 for
+ * char type).
+ * @param destructor An appropriate destructor function pointer (NULL if not
+ * needed).
+ * @return The new nt_buffer's pointer (NULL if any error).
+ */
+nt_buffer *nt_buffer_new(size_t capacity, size_t element_size, void (*destructor)(void *))
+{
+    nt_buffer *res = malloc(sizeof(nt_buffer));
+
+    if (!res)
+        return (NULL);
+
+    if (nt_buffer_init(res, capacity, element_size, destructor) != NT_BUFFER_SUCCESS)
+    {
+        free(res);
+        return (NULL);
+    }
+
+    return (res);
 }
 
 /**
