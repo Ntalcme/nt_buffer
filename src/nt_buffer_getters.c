@@ -1,5 +1,4 @@
-#include "nt_buffer.h"
-#include <stddef.h>
+#include "nt_buffer_internal.h"
 
 /**
  * Retrieves a pointer to the element at the specified index in the buffer.
