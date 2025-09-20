@@ -1,4 +1,4 @@
-#include "nt_buffer.h"
+#include "nt_buffer_internal.h"
 #include <stddef.h>
 
 /**
