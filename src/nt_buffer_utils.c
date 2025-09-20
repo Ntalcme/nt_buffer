@@ -2,9 +2,9 @@
 #include <stdlib.h>
 
 /**
- * Reallocs only the necessary memory for the buffer's data
- * @param buf The buffer's pointer
- * @return the appropriate success/failure code
+ * Reallocs only the necessary memory for the buffer's data.
+ * @param buf The buffer's pointer.
+ * @return the appropriate success/failure code.
  */
 nt_buffer_return_code nt_buffer_shrink_to_fit(nt_buffer *buf)
 {
