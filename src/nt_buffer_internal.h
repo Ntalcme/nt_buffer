@@ -4,7 +4,6 @@
 #include "nt_buffer.h"
 #include <stddef.h>
 
-// Définition complète de la structure
 struct nt_buffer
 {
     void  *data;
